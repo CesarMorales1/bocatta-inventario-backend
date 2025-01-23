@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/partials/header/header.css">
+    <link rel="stylesheet" href="/partials/ingredient/createIngredient.css">
+    <script src="/partials/ingredient/createIngredient.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header')%>
+    <!-- product-form.html -->
+<div class="container-ingredient">
+    <form class="form">
+      <!-- Código de barras (read-only) -->
+      <div class="field">
+        <label for="barcode">Código de barras</label>
+        <input id="barcode" type="text" class="<%= !ingredient.codigo_barras ? 'editable' : '' %>" value="<%= ingredient.codigo_barras || '' %>" <%= !ingredient.codigo_barras ? '' : 'readonly' %> />
+      </div>
+      
+  
+      <!-- Nombre del ingrediente -->
+      <div class="field">
+        <label for="productName">Nombre del ingrediente</label>
+        <input id="productName" type="text" value="<%= ingredient.nombre || '' %>" />
+      </div>
+      
+      <!-- Número de existencias (read-only) -->
+      <div class="field">
+        <label for="units">Número de existencias</label>
+        <input id="units" type="number" class="<%= !ingredient.unidades ? 'editable' : '' %>" value="<%= ingredient.unidades || '' %>" <%= !ingredient.unidades ? '' : 'readonly' %> />
+      </div>
+  
+      <!-- Botones -->
+      <div class="button-group">
+        <button class="btn btn-default" type="button">Guardar</button>
+      </div>
+    </form>
+  </div>
+  
+</body>
+</html>

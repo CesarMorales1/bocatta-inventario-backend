@@ -1,0 +1,108 @@
+body{
+    background-color: #f0f0f0;
+}
+.table-container {
+    margin: 45px auto;
+    width: 80%;
+    height: 400px; /* Altura fija */
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.warehouse-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.warehouse-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 1;
+}
+
+.warehouse-table th, .warehouse-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    width: 25%;
+}
+
+.warehouse-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.warehouse-table th:last-child {
+    position: relative;
+}
+
+.warehouse-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    /*margin-left: 5px; */
+    font-size: 16px;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.action-btn:hover {
+    color: #000;
+}
+
+.edit:hover {
+    color: #4CAF50;
+}
+
+.delete:hover {
+    color: #f44336;
+}
+
+.view:hover {
+    color: #2196F3;
+}
+
+.action-btn.more {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: #666;
+    transition: color 0.3s ease;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.action-btn.more:hover {
+    color: #4CAF50;
+}
+
+/* Estilos para el foco del teclado */
+.warehouse-table tbody tr:focus {
+    outline: 2px solid #2196F3;
+    background-color: #e3f2fd;
+}
+
+
+
+

@@ -1,0 +1,21 @@
+{
+  "name": "proyecto-bochata",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "sistema de inventario para la empresa bochata",
+  "main": "app.js",
+  "scripts": {
+    "test": "node --watch --env-file=.env app.js"
+  },
+  "author": "cesar morales",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.22.0",
+    "prisma": "^6.2.1"
+  }
+}
