@@ -163,4 +163,3 @@ model unidadesmedida {
 
   @@schema("inventario")
 }
-

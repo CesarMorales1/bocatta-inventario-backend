@@ -97,7 +97,7 @@ export class FacturaUseCase extends CommonCrudMixin {
                                 cantidad: detalle.cantidad,
                                 precio_unitario: detalle.precio_unitario,
                                 subtotal: detalle.subtotal,
-                                unidad_medida: 1,
+                                unidad_medida: 6,
                             },
                         });
                     } catch (error) {

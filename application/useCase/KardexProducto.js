@@ -39,7 +39,6 @@ export class KardexProductoUseCase {
     
                 // Calcular el nuevo saldo restando la cantidad vendida del stock actual
                 const nuevoSaldo = Number(producto.stock_actual) - Number(product.cantidad);
-    
                 // Iniciar transacción
                 await this.database.$transaction(async (prisma) => {
                     if (registrosExistentes.length > 0) {
@@ -54,7 +53,10 @@ export class KardexProductoUseCase {
                             if (nuevaCantidad !== cantidadExistente) {
                                 // Calcular la diferencia en la cantidad
                                 const diferenciaCantidad = nuevaCantidad - cantidadExistente;
-    
+                                await this.database['productos_terminados'].update({
+                                    where: { id_producto: product.id_producto },
+                                    data: { stock_actual: {increment: diferenciaCantidad} }
+                                });
                                 // Procesar solo las recetas del producto que cambió
                                 await this.procesarRecetasYActualizarStock(
                                     prisma,
@@ -78,6 +80,10 @@ export class KardexProductoUseCase {
                             }
                         }
                     } else {
+                        await this.database['productos_terminados'].update({
+                            where: { id_producto: product.id_producto },
+                            data: { stock_actual: nuevoSaldo }
+                        });
                         // Si no hay registros existentes, crear uno nuevo
                         await this.procesarRecetasYActualizarStock(
                             prisma,
@@ -85,7 +91,7 @@ export class KardexProductoUseCase {
                             producto,
                             product.cantidad, // Cantidad total
                             ventasData,
-                            fechaMovimiento
+                            fechaMovimiento,
                         );
     
                         await prisma.kardex_productos.create({
@@ -140,7 +146,6 @@ export class KardexProductoUseCase {
     
             // Calcular nuevo stock permitiendo valores negativos
             const nuevoStockMateriaPrima = Number(materiaPrima.stock_actual) - Number(cantidadRequerida);
-    
             // Actualizar stock de materia prima
             await prisma.materia_prima.update({
                 where: { id_materia_prima: receta.id_materia_prima },
@@ -223,7 +228,6 @@ export class KardexProductoUseCase {
 
                 // Calcular nuevo saldo permitiendo valores negativos
                 const nuevoSaldo = Number(producto.stock_actual) - Number(product.cantidad);
-
                 // Actualizar stock del producto
                 await prisma.productos_terminados.update({
                     where: { id_producto: product.id_producto },

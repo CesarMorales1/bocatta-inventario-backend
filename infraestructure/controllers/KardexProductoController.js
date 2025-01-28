@@ -45,8 +45,25 @@ export class KardexProductoController {
 
     getKardexByProduct = async (req, res) => {
         try {
-            const { id_producto } = req.params;
-            const kardexProductos = await this.kardexProductoUseCase.getByProductId(id_producto);
+            //sacando informacion de los query
+            const { id_producto, startDate, endDate, skip=0, take = 10 } = req.query;
+            //verificando si el producto existe
+            if(!id_producto)
+                {
+                    throw new ResponseApi.badRequest('El id no puede ser vacio por favor verificar la peticion',null);
+                }
+            //
+
+            //conviertiendo el formato date a uno valido por la db
+            const startDateISO = startDate ?
+            new Date(startDate).toISOString():
+            undefined;
+            const endDateIso   = endDate ? 
+            new Date(endDate).toISOString():
+            undefined;
+            //agregando funcion con paginacion para evitar colapso del servidor y la db
+            const kardexProductos = await this.kardexProductoUseCase.getKardexByProduct(Number(id_producto),startDateISO,endDateIso,Number(skip),Number(take));
+            
             const response = ResponseApi.successfulRequest('Registros de kardex del producto obtenidos con éxito', kardexProductos);
             res.status(response.httpCode).json(response);
         } catch (error) {

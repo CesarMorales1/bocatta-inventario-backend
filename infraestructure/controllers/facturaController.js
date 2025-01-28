@@ -9,6 +9,7 @@ export class FacturaController {
 
     createOneFactura = async (req, res, next) => {
         try {
+            console.log(req.body)
             const {detalle_factura:items,...facturaInformation} = req.body;
             const result = await this.facturaUseCase.createFacturaConDetalles(facturaInformation,items);
             const response = ResponseApi.successfulRequest(result, 'La factura ha sido creada con éxito');

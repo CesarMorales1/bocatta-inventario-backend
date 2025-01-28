@@ -7,6 +7,8 @@ const kardexMateriaPrimaController = new KardexMateriaPrimaController(prisma);
 const kardexMateriaRouter =  Router();
 
 kardexMateriaRouter.get('/kardexMateria',kardexMateriaPrimaController.getAllKardex)
+//ruta para obtener kardex con paginacion
+kardexMateriaRouter.get('/kardexMateria/pagination',kardexMateriaPrimaController.getPaginationKardex)
 
 export default kardexMateriaRouter;
 

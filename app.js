@@ -11,6 +11,7 @@ import conversionRouter from "./infraestructure/routes/ConversionRoutes.js"
 import productoRouter from "./infraestructure/routes/productoTerminado.js";
 import KardexProductoRouter from "./infraestructure/routes/KardexProductoController.js"
 import kardexMateriaRouter from "./infraestructure/routes/kardexMateria.js";
+import ajusteRoutes from "./infraestructure/routes/ajusteRoutes.js";
 const server = express();
 //variables de entorno
 const __PORT = process.env.__PORT || 3000;
@@ -33,6 +34,7 @@ server.use(conversionRouter)
 server.use(productoRouter)
 server.use(KardexProductoRouter)
 server.use(kardexMateriaRouter)
+server.use(ajusteRoutes)
 //
 
 //protegiendo
