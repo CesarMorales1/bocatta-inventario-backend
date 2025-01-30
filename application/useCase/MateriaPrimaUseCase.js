@@ -24,7 +24,7 @@ export class MateriaPrimaUseCase extends CommonCrudMixin
     getOne = async (referenceCodigoBarra) => 
         {
             try {
-                const materiaPrima = this.database[`${this.tableName}`].findUnique(
+                const materiaPrima = await this.database[`${this.tableName}`].findUnique(
                     {
                         where:{codigo_barras: referenceCodigoBarra}
                     })
@@ -50,10 +50,14 @@ export class MateriaPrimaUseCase extends CommonCrudMixin
                     throw new AppError("NotFound", 404, "La materia prima no fue encontrada", true);
                 }
 
+                //validando materia prima
+                const validatedMateriaPrima = new MateriaPrima(updatedData);
+                //
+
                 // Actualizar la materia prima
                 const updatedMateriaPrima = await this.database[`${this.tableName}`].update({
                     where: { codigo_barras: referenceCodigoBarra },
-                    data: updatedData,
+                    data: validatedMateriaPrima,
                 });
     
                 return updatedMateriaPrima;
