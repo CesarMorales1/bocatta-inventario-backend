@@ -6,7 +6,31 @@ export class KardexProductoController {
     constructor(database) {
         this.kardexProductoUseCase = new KardexProductoUseCase({ database });
     }
-
+    obtenerKardexPorReferencia = async (req, res) => {
+        try {
+            const { referencia } = req.params;
+            const result = await this.kardexProductoUseCase.obtenerKardexPorReferencia(referencia);
+            
+            if (!result) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Registro de kardex no encontrado',
+                    data: null
+                });
+            }
+    
+            return res.status(200).json({
+                success: true,
+                message: 'Registro de kardex encontrado con éxito',
+                data: result
+            });
+        } catch (error) {
+            const response = error instanceof AppError 
+                ? error 
+                : ResponseApi.internalServerError(error.message);
+            res.status(response.httpCode).json(response);
+        }
+    }
     procesarArchivoVentas = async (req, res) => {
         try {
             const ventasData = req.body;

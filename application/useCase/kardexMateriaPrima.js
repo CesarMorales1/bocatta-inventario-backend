@@ -54,7 +54,7 @@ export class KardexMateriaPrima extends CommonCrudMixin
             const whereClause = {
                 id_materia_prima: filters.id_producto, // Filtro por id_producto
             };
-
+            //2025-01-02T04:00:00.000Z
             // Agregar filtro por rango de fechas si están presentes
             if (filters.dateStart && filters.dateEnd) {
                 whereClause.fecha_movimiento = {

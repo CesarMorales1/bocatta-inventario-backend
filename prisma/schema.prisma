@@ -49,7 +49,6 @@ model ConversionFactor {
   @@schema("inventario")
 }
 
-
 model kardex_materia_prima {
   id_kardex        Int            @id @default(autoincrement())
   id_materia_prima Int?
@@ -75,10 +74,10 @@ model kardex_productos {
   costo_produccion     Decimal?              @db.Decimal(10, 2)
   precio_venta         Decimal?              @db.Decimal(10, 2)
   fecha_movimiento     DateTime?             @default(now()) @db.Timestamp(6)
-  referencia           String?               @db.VarChar(100)
+  referencia           String?               @db.VarChar(100) // Referencia principal (única por día)
+  referencias_archivos String[]              @default([])    // Array de referencias de archivos procesados
   observaciones        String?
   productos_terminados productos_terminados? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction)
-
   @@schema("inventario")
 }
 
@@ -117,11 +116,25 @@ model productos_terminados {
   precio_venta      Decimal            @db.Decimal(10, 2)
   stock_actual      Decimal?           @default(0) @db.Decimal(10, 2)
   codigo_barras     String
-  precio_produccion Int
+  precio_produccion Decimal            @db.Decimal(10,2)
   id_moneda         Int
   kardex_productos  kardex_productos[]
   monedas           monedas            @relation(fields: [id_moneda], references: [id_moneda], onDelete: NoAction, onUpdate: NoAction)
   recetas           recetas[]
+  producto_especial productos_especiales? @relation(fields: [id_producto_especial], references: [id_producto_especial])
+  id_producto_especial Int? @unique
+
+  @@schema("inventario")
+}
+
+model productos_especiales {
+  id_producto_especial Int @id @default(autoincrement())
+  id_producto         Int
+  rendimiento         Decimal @db.Decimal(10, 2) @default(0)
+  unidad_rendimiento  Int?
+  producto_terminado productos_terminados?
+  recetas             recetas[]
+  unidad              unidadesmedida? @relation(fields: [unidad_rendimiento], references: [id])
 
   @@schema("inventario")
 }
@@ -144,15 +157,18 @@ model recetas {
   id_receta            Int                   @id @default(autoincrement())
   id_producto          Int?
   id_materia_prima     Int?
+  id_producto_especial Int?                  
   cantidad_requerida   Decimal               @db.Decimal(10, 2)
   unidad_medida        Int?
   disponible           Boolean               @default(true)
   unidadesmedida       unidadesmedida?       @relation(fields: [unidad_medida], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_recetas_unidad_medida")
   materia_prima        materia_prima?        @relation(fields: [id_materia_prima], references: [id_materia_prima], onDelete: NoAction, onUpdate: NoAction)
   productos_terminados productos_terminados? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction)
+  productos_especiales productos_especiales? @relation(fields: [id_producto_especial], references: [id_producto_especial], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("inventario")
 }
+
 model unidadesmedida {
   id                Int               @id @default(autoincrement())
   nombre            String            @unique @db.VarChar
@@ -160,6 +176,7 @@ model unidadesmedida {
   detalle_factura   detalle_factura[]
   recetas           recetas[]
   materia_prima     materia_prima[]
+  productos_especiales productos_especiales[]
 
   @@schema("inventario")
 }

@@ -29,12 +29,13 @@ facturaRouter.get('/factura/:id_factura',
 facturaRouter.get('/facturas/list', async (req, res) => {
     try {
         // const facturasDir = path.join(process.cwd(), 'facturas');
-        const facturasDir = 'C:/Users/Cesar Morales/OneDrive/Escritorio/Proyectos/bocatta-front/facturas';
+        const facturasDir = 'C:/Users/Cesar Morales/v2 bocatta/bocatta-front/facturas';
         // Leer el directorio
         const files = fs.readdirSync(facturasDir);
+        console.log(files)
         // Filtrar archivos que coincidan con el patrón piso.YYYYMMDD
         const validFiles = files.filter(file => {
-            return /^piso\d*\.\d{8}$/.test(file);
+            return /^piso\d*\.\d{8}$/.test(file) || /^credito2\.\d{8}$/.test(file);
         });
 
         res.json({

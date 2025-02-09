@@ -10,11 +10,11 @@ export class ProductoTerminadoController {
     createOneProducto = async (req, res, next) => {
         try {
             const newProducto = req.body;
-            console.log(newProducto)
             const result = await this.productoTerminadoUseCase.createOne(newProducto);
             const response = ResponseApi.successfulRequest(result, 'El producto ha sido creado con éxito');
             res.status(response.httpCode).json(response);
         } catch (error) {
+            console.log(error)
             const response = error instanceof AppError ? error : ResponseApi.internalServerError(error.message);
             res.status(response.httpCode).json(response);
         }
@@ -51,9 +51,9 @@ export class ProductoTerminadoController {
 
     updateOneProducto = async (req, res, next) => {
         try {
+            console.log(req.body)
             const { id_producto } = req.params;
             const updatedData = req.body;
-            
             const updatedProducto = await this.productoTerminadoUseCase.updateOne(Number(id_producto), updatedData);
             const response = ResponseApi.successfulRequest(updatedProducto, 'El producto ha sido actualizado con éxito');
             res.status(response.httpCode).json(response);

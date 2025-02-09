@@ -28,7 +28,7 @@ kardexProductoRouter.get('/kardex-producto/producto/:id_producto',
 
 // GET - Obtener un movimiento específico de kardex
 kardexProductoRouter.get('/kardex-producto/:id_kardex', 
-    kardexProductoController.getOneKardex
+    kardexProductoController.obtenerKardexPorReferencia
 );
 
 // GET - Obtener un registro de kardex por referencia

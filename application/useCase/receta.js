@@ -7,6 +7,7 @@ import { AppError } from "../../domain/exeptions/AppError.js";
 export class RecetaUseCase extends CommonCrudMixin {
     constructor({ database }) {
         super({ database: database, tableName: 'recetas' });
+        this.conection = this.database['recetas'];
     }
     async getOne(referenceId) {
         try {
@@ -68,15 +69,32 @@ export class RecetaUseCase extends CommonCrudMixin {
         }
     }
 
-    getAll = async () => 
-        {
-            try {
-                return await super.getAll();
-            } catch (error) {
-                throw error
+    getAll = async () => {
+        try {
+          const recetas = await this.database.recetas.findMany({
+            include: {
+              unidadesmedida: true,
+              materia_prima: true,
+              productos_terminados: {
+                select: {
+                  id_producto: true,
+                  nombre: true,
+                  precio_venta: true,
+                  stock_actual: true,
+                  codigo_barras: true,
+                  precio_produccion: true,
+                  id_moneda: true
+                }
+              },
+              productos_especiales: true
             }
+          });
+          return recetas;
+        } catch (error) {
+          console.log(error);
+          throw error;
         }
-
+      };
     // updateOneReceta = async (referenceId, updatedData, productoTerminadoUseCase) => 
     //     {
 

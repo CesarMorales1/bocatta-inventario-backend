@@ -22,7 +22,7 @@ const __PORT = process.env.__PORT || 3000;
 server.use(cors());
 server.use(express.json());
 server.use(morgan('dev'));
-
+    
 //Rutas a usar
 server.use(proveedorRouter);
 server.use(materiaPrimaRouter);

@@ -23,10 +23,11 @@ export class RecetaController {
 
     getAllReceta = async (req, res, next) => {
         try {
-            const materiasPrimas = await this.recetaUseCase.getAll();
+            //obtener todas las recetas con productos especiales
+            const recetas = await this.recetaUseCase.getAll();
             const response = ResponseApi.successfulRequest(
                 "Todas las recetas han sido obtenidas con éxito",
-                materiasPrimas,
+                recetas,
             );
             res.status(response.httpCode).json(response);
         } catch (error) {
