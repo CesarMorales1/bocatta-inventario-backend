@@ -5,7 +5,7 @@
   "description": "sistema de inventario para la empresa bochata",
   "main": "app.js",
   "scripts": {
-    "test": "npx prisma migrate deploy && node --watch --env-file=.env app.js"
+    "test": "npx prisma migrate deploy && node app.js"
   },
   "author": "cesar morales",
   "license": "MIT",
