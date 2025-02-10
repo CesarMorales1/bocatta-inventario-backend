@@ -14,7 +14,7 @@ import kardexMateriaRouter from "./infraestructure/routes/kardexMateria.js";
 import ajusteRoutes from "./infraestructure/routes/ajusteRoutes.js";
 const server = express();
 //variables de entorno
-const __PORT = process.env.__PORT || 3000;
+const __PORT = process.env.PORT || 3000;
 //
 
 
