@@ -1,8 +1,6 @@
 import { RecetaUseCase } from "../../application/useCase/receta.js"
 import { ResponseApi } from "../../domain/entities/apiResponse.js"
 import { AppError } from "../../domain/exeptions/AppError.js";
-import { Receta } from "../../domain/entities/Receta.js";
-import {ProductoTerminadoUseCase} from "../../application/useCase/productoTerminado.js"
 
 export class RecetaController {
     constructor(database) {
